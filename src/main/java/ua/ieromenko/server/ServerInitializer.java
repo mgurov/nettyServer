@@ -1,20 +1,17 @@
 package ua.ieromenko.server;
 
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * @Author Alexandr Ieromenko on 04.03.15.
  */
 public class ServerInitializer extends ChannelInitializer<SocketChannel> {
 
-    //TrafficCounter stopped because it counts only request`s body bytes
+    //The TrafficCounter is stopped because it counts bytes only inside request`s body
     private final StatisticsHandler statisticsHandler = new StatisticsHandler(0);
 
     @Override

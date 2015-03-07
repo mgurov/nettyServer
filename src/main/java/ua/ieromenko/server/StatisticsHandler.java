@@ -23,6 +23,7 @@ import static io.netty.channel.ChannelHandler.Sharable;
  */
 @Sharable
 public class StatisticsHandler extends ChannelTrafficShapingHandler {
+
     private final AtomicInteger totalConnectionsCounter = new AtomicInteger(0);
     private final AtomicInteger activeConnectionsCounter = new AtomicInteger(0);
 

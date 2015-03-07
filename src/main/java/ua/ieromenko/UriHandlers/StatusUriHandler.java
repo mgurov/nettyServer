@@ -21,19 +21,20 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 public class StatusUriHandler implements UriHandler {
     private final WrapperOfEverything stat;
 
-    public StatusUriHandler(WrapperOfEverything c) {
-        this.stat = c;
+    public StatusUriHandler(WrapperOfEverything stat) {
+        this.stat = stat;
     }
 
     @Override
     public FullHttpResponse process(HttpRequest request, StringBuilder buff) {
+
         buff.append("<!DOCTYPE html>");
         buff.append("<html>");
-        buff.append("<head>\n" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n" +
-                "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css\">\n" +
-                "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css\">\n" +
-                "</head>");
+        buff.append("<head>");
+        buff.append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n");
+        buff.append("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css\">\n");
+        buff.append("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css\">\n");
+        buff.append("</head>");
 
         buff.append("<body>");
         buff.append("<h2>SERVER STATISTICS</h2>");
