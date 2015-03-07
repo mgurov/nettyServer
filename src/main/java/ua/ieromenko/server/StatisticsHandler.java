@@ -18,7 +18,7 @@ import static io.netty.channel.ChannelHandler.Sharable;
 
 /**
  * @Author Alexandr Ieromenko on 05.03.15.
- *
+ * <p/>
  * Statistics Handler
  */
 @Sharable
@@ -48,7 +48,7 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
             HttpRequest request = (HttpRequest) msg;
             String URI = request.getUri();
 
-            // SEND STATISTICS TO HANDLER
+            // SEND STATISTICS TO HttpHandler
             if (URI.equals("/status")) {
                 WrapperOfEverything c = new WrapperOfEverything(redirectionPerURL,
                         log, requestsCounter, activeConnectionsCounter, totalConnectionsCounter);
@@ -70,8 +70,9 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
             }
 
             //REDIRECTION COUNT
-            synchronized (redirectionPerURL) {
-                if (URI.matches("/redirect\\?url=\\S*")) {
+
+            if (URI.matches("/redirect\\?url=\\S*")) {
+                synchronized (redirectionPerURL) {
                     if (!redirectionPerURL.containsKey(URI)) {
                         redirectionPerURL.put(URI, 1);
                     } else {
@@ -86,9 +87,9 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-        synchronized (log){
-        ConnectionLogUnit unit1 = ctx.channel().attr(unit).getAndRemove();
-        if (unit1 != null) log.add(unit1);
+        synchronized (log) {
+            ConnectionLogUnit unit1 = ctx.channel().attr(unit).getAndRemove();
+            if (unit1 != null) log.add(unit1);
         }
         activeConnectionsCounter.getAndDecrement();
         super.handlerRemoved(ctx);

@@ -18,6 +18,7 @@ public class RedirectUriHandler implements UriHandler {
     public FullHttpResponse process(HttpRequest request, StringBuilder buff) {
         String requestURI = request.getUri();
         String url = requestURI.substring(requestURI.indexOf("=") + 1, requestURI.length());
+        if (!requestURI.matches("/redirect\\?url=http\\S*")) url = "http://" + url;
         FullHttpResponse response = new DefaultFullHttpResponse(
                 HTTP_1_1, FOUND);
         response.headers().set(HttpHeaders.Names.LOCATION, url);
