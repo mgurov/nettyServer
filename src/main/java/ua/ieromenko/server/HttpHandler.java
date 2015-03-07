@@ -62,6 +62,7 @@ class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
             //send response
             FullHttpResponse response = handler.process(request, buf);
+            //close the connection immediately because no more requests can be sent from the browser
             ctx.write(response).addListener(ChannelFutureListener.CLOSE);
 
             // do some statistics

@@ -22,7 +22,7 @@ public class HelloUriHandler implements UriHandler {
 
         buff.append("<!DOCTYPE html>");
         buff.append("<html><body><h1>");
-        buff.append("Hello World!!");
+        buff.append("Hello World!!!");
         buff.append("</h1></body></html>");
 
         FullHttpResponse response = new DefaultFullHttpResponse(
