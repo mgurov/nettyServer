@@ -1,0 +1,89 @@
+logs
+.idea
+.idea_modules
+idea.bat
+out
+target
+*.iml
+atlassian-ide-plugin.xml
+file_storage
+# Directories #
+/build/
+/bin/
+target/
+ 
+# OS Files #
+.DS_Store
+ 
+*.class
+ 
+# Package Files #
+*.jar
+*.war
+*.ear
+*.db
+ 
+######################
+# Windows
+######################
+ 
+# Windows image file caches
+Thumbs.db 
+ 
+# Folder config file
+Desktop.ini
+ 
+######################
+# Eclipse
+######################
+ 
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+/src/main/resources/rebel.xml
+# External tool builders
+.externalToolBuilders/
+ 
+# Locally stored "Eclipse launch configurations"
+*.launch
+ 
+# CDT-specific
+.cproject
+ 
+# PDT-specific
+.buildpath
+
+
+# scripts
+scripts/wget/work/
+scripts/wget/results/*
+scripts/wget/cookies.txt
+
+# Frontend test logs
+src/main/webapp/WEB-INF/test/npm-debug.log
+
+# Frontend test libs and tools
+src/main/webapp/WEB-INF/html/test/node_modules/
+src/main/webapp/WEB-INF/test/node_modules/
+
+# Frontend test coverage
+src/main/webapp/WEB-INF/test/coverage/
+
+#spring-data-mongo.xml
+#mysql.properties
+#mongo.properties
+
+#Ignore uploads
+src/main/webapp/resources/images/users/
+target/taskbook/resources/images/users/
