@@ -37,6 +37,7 @@ public class StatusUriHandler implements UriHandler {
         buff.append("</head>");
 
         buff.append("<body>");
+        buff.append("<div style=\"margin: 0 0 0 25px  \">");
         buff.append("<h2>SERVER STATISTICS</h2>");
         buff.append("<h4>Total connections: ").append(stat.getConnectionsCounter()).append("</h4>");
         buff.append("<h4>Active connections: ").append(stat.getActiveConnectionsCounter()).append("</h4>");
@@ -104,7 +105,7 @@ public class StatusUriHandler implements UriHandler {
             buff.append(c.getReceivedBytes()).append("</td><td>");
             buff.append(c.getSpeed()).append("</td></tr>");
         }
-        buff.append("</tbody></table></html>");
+        buff.append("</tbody></table></div></body></html>");
 
 
         FullHttpResponse response = new DefaultFullHttpResponse(
