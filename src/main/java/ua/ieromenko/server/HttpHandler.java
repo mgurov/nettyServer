@@ -15,11 +15,13 @@ import ua.ieromenko.wrappers.WrapperOfEverything;
 import java.net.InetSocketAddress;
 import java.util.Date;
 
+import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
+
 /**
  * @Author Alexandr Ieromenko on 04.03.15.
- *
+ * <p/>
  * Main HttpRequests handler
- *
+ * <p/>
  * Throw away requests that have only the body or tail because aggregator bond them to the whole FullHttpRequest
  */
 class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
@@ -46,23 +48,23 @@ class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest httpRequest) {
         if (httpRequest != null) {
-            this.request =  httpRequest;
+            this.request = httpRequest;
             String URI = request.getUri();
 
             //let`s handle this request
             UriHandler handler;
             if (URI.equals("/hello")) handler = new HelloUriHandler();
             else if (URI.matches("/redirect\\?url=\\S*")) handler = new RedirectUriHandler();
-            else if (URI.equals("/status")){
+            else if (URI.equals("/status")) {
                 //read statistics that StatisticsHandler has already prepared
                 WrapperOfEverything wrapper = ctx.channel().attr(stat).getAndRemove();
                 handler = new StatusUriHandler(wrapper);
-            }
-            else handler = new NotFoundUriHandler();
+            } else handler = new NotFoundUriHandler();
 
             //send response
             FullHttpResponse response = handler.process(request, buf);
             //close the connection immediately because no more requests can be sent from the browser
+            response.headers().set(CONTENT_TYPE, UriHandler.CONTENT_TYPE);
             ctx.write(response).addListener(ChannelFutureListener.CLOSE);
 
             // do some statistics
@@ -82,7 +84,7 @@ class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
         //if there is another formula i can change that
         if (request != null) {
             long time0 = System.nanoTime() - time;
-            double time1 = time0 / (double)1000000000;
+            double time1 = time0 / (double) 1000000000;
             long speed = Math.round((sentBytes + receivedBytes) / time1);
             logUnit.setSpeed(speed);
         }

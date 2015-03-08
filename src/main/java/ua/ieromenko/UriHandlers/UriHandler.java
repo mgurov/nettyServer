@@ -10,4 +10,6 @@ public interface UriHandler{
 
     FullHttpResponse process(HttpRequest request, StringBuilder buff);
 
+    String CONTENT_TYPE = "text/html; charset=UTF-8";
+
 }
