@@ -57,9 +57,9 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
 
             //IP REQUESTS COUNTER
             //UNIQUE REQUESTS PER IP COUNTER
+            String requestIP = (((InetSocketAddress) ctx.channel().remoteAddress()).getHostString());
+            RequestsCounter c;
             synchronized (requestsCounter) {
-                String requestIP = (((InetSocketAddress) ctx.channel().remoteAddress()).getHostString());
-                RequestsCounter c;
                 if (!requestsCounter.containsKey(requestIP)) {
                     c = new RequestsCounter(requestIP, URI);
                     requestsCounter.put(requestIP, c);
@@ -70,13 +70,13 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
             }
 
             //REDIRECTION COUNT
-
             if (URI.matches("/redirect\\?url=\\S*")) {
+                String url = URI.substring(URI.indexOf("=") + 1, URI.length());
                 synchronized (redirectionPerURL) {
-                    if (!redirectionPerURL.containsKey(URI)) {
-                        redirectionPerURL.put(URI, 1);
+                    if (!redirectionPerURL.containsKey(url)) {
+                        redirectionPerURL.put(url, 1);
                     } else {
-                        redirectionPerURL.put(URI, redirectionPerURL.get(URI) + 1);
+                        redirectionPerURL.put(url, redirectionPerURL.get(url) + 1);
                     }
                 }
             }
