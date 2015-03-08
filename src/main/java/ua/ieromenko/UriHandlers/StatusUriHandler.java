@@ -39,10 +39,13 @@ public class StatusUriHandler implements UriHandler {
         buff.append("<body>");
         buff.append("<div style=\"margin: 0 0 0 25px  \">");
         buff.append("<h2>SERVER STATISTICS</h2>");
+
+        // Total connections
         buff.append("<h4>Total connections: ").append(stat.getConnectionsCounter()).append("</h4>");
+        // Active connections
         buff.append("<h4>Active connections: ").append(stat.getActiveConnectionsCounter()).append("</h4>");
 
-
+        // Unique Requests per one IP table
         buff.append("<h4>Unique requests per IP :</h4>");
         buff.append("<table class=\"table table-hover table-bordered table-striped\" style=\"width: 30%;\"><tbody>");
         buff.append("<tr><th>").append(" IP ").append("</th><th>").append("requests").append("</th></tr>");
@@ -55,7 +58,7 @@ public class StatusUriHandler implements UriHandler {
         }
         buff.append("</tbody></table>");
 
-
+        //Counter of the requests per 1 IP
         buff.append("<h4>IP requests counter :</h4>");
         buff.append("<table class=\"table table-hover table-bordered table-striped\" style=\"width: 30%;\"><tbody>");
         buff.append("<tr><th>").append(" IP ").append("</th><th>").append("requests")
@@ -71,7 +74,7 @@ public class StatusUriHandler implements UriHandler {
         }
         buff.append("</tbody></table>");
 
-
+        //Counter of the redirection per URL
         buff.append("<h4>URL redirection counter :</h4>");
         buff.append("<table class=\"table table-hover table-bordered table-striped\" style=\"width: 40%;\"><tbody>");
         buff.append("<tr><th class=\"col-md-4\">").append(" URL ")
@@ -85,7 +88,7 @@ public class StatusUriHandler implements UriHandler {
         }
         buff.append("</tbody></table>");
 
-
+        //Connections log
         buff.append("<h4>Connections log :</h4>");
         buff.append("<table class=\"table table-hover table-bordered table-striped\" style=\"width: 70%;\"><tbody>");
         buff.append("<tr><th class=\"col-md-1\">").append("IP ")

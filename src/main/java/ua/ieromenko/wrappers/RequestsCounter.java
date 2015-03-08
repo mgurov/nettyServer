@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * @Author Alexandr Ieromenko on 06.03.15.
  *
- * Wrapper for counting request
+ * Wrapper for counting requests
  */
 public class RequestsCounter {
     private String IP;
