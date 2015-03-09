@@ -22,7 +22,6 @@ import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
  * <p/>
  * Main HttpRequests handler
  * <p/>
- * Throw away requests that have only the body or tail because aggregator bond them to the whole FullHttpRequest
  */
 class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     private FullHttpRequest request;
