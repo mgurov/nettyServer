@@ -15,8 +15,10 @@ public class LoggingQueue<E> extends ConcurrentLinkedQueue<E> {
     }
 
     private void clean() {
-        for (int size = size(); size > 15; size = size()) {
+        do {
             super.remove();
         }
+        while (size() > 15);
+
     }
 }
