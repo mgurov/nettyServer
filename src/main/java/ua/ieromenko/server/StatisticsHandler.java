@@ -51,7 +51,7 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
             // SEND STATISTICS TO HttpHandler
             if (URI.equals("/status")) {
                 WrapperOfEverything c = new WrapperOfEverything(redirectionPerURL,
-                        log, requestsCounter, activeConnectionsCounter, totalConnectionsCounter);
+                        log, requestsCounter, activeConnectionsCounter.get(), totalConnectionsCounter.get());
                 ctx.channel().attr(stat).set(c);
             }
 

@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class WrapperOfEverything {
 
-    private AtomicInteger connectionsCounter;
-    private AtomicInteger activeConnectionsCounter;
+    private int connectionsCounter;
+    private int activeConnectionsCounter;
 
     private final ConcurrentHashMap<String, RequestsCounter> requestsCounter; //IP, unique req per ip
     private final ConcurrentHashMap<String, Integer> redirectionPerURL; //URL, count
@@ -23,8 +23,8 @@ public class WrapperOfEverything {
     public WrapperOfEverything(ConcurrentHashMap<String, Integer> redirectionPerURL,
                                LoggingQueue<ConnectionLogUnit> log,
                                ConcurrentHashMap<String, RequestsCounter> requestsCounter,
-                               AtomicInteger activeConnectionsCounter,
-                               AtomicInteger connectionsCounter) {
+                               int activeConnectionsCounter,
+                               int connectionsCounter) {
         this.redirectionPerURL = redirectionPerURL;
         this.log = log;
         this.requestsCounter = requestsCounter;
@@ -32,11 +32,11 @@ public class WrapperOfEverything {
         this.connectionsCounter = connectionsCounter;
     }
 
-    public AtomicInteger getConnectionsCounter() {
+    public int getConnectionsCounter() {
         return connectionsCounter;
     }
 
-    public AtomicInteger getActiveConnectionsCounter() {
+    public int getActiveConnectionsCounter() {
         return activeConnectionsCounter;
     }
 

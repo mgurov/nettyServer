@@ -7,7 +7,6 @@ import java.net.BindException;
 
 /**
  * @Author Alexandr Ieromenko on 07.03.15.
- *
  */
 public class MainClass extends Thread {
     private static int port;
@@ -43,24 +42,27 @@ public class MainClass extends Thread {
     @Override
     public void run() {
         for (; ; ) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String request = null;
-            try {
-                request = reader.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (request != null) {
-                if (request.equalsIgnoreCase("stop") || request.equalsIgnoreCase("s")) {
-                    System.err.println("Stopping the server...");
-                    server.stop();
-                    System.err.println("Stopped");
-                    System.exit(0);
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+                String request = null;
+                try {
+                    request = reader.readLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            }
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
+                if (request != null) {
+                    if (request.equalsIgnoreCase("stop") || request.equalsIgnoreCase("s")) {
+                        System.err.println("Stopping the server...");
+                        server.stop();
+                        System.err.println("Stopped");
+                        System.exit(0);
+                    }
+                }
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 

@@ -8,7 +8,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.util.AttributeKey;
-import ua.ieromenko.UriHandlers.*;
+import ua.ieromenko.uriHandlers.*;
 import ua.ieromenko.wrappers.ConnectionLogUnit;
 import ua.ieromenko.wrappers.WrapperOfEverything;
 
@@ -24,12 +24,13 @@ import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
  * <p/>
  */
 class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
+    private static final HelloUriHandler helloUriHandler = new HelloUriHandler();
+    private static final NotFoundUriHandler notFoundUriHandler = new NotFoundUriHandler();
+
+    private static final AttributeKey<ConnectionLogUnit> unit = AttributeKey.valueOf("unit");
+    private static final AttributeKey<WrapperOfEverything> stat = AttributeKey.valueOf("stat");
+
     private FullHttpRequest request;
-    private final StringBuilder buf = new StringBuilder();
-
-    private final AttributeKey<ConnectionLogUnit> unit = AttributeKey.valueOf("unit");
-    private final AttributeKey<WrapperOfEverything> stat = AttributeKey.valueOf("stat");
-
     private ConnectionLogUnit logUnit = null;
     private int sentBytes;
     private int receivedBytes;
@@ -52,18 +53,18 @@ class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
             //let`s handle this request
             UriHandler handler;
-            if (URI.equals("/hello")) handler = new HelloUriHandler();
+            if (URI.equals("/hello")) handler = helloUriHandler;
             else if (URI.matches("/redirect\\?url=\\S*")) handler = new RedirectUriHandler();
             else if (URI.equals("/status")) {
                 //read statistics that StatisticsHandler has already prepared
                 WrapperOfEverything wrapper = ctx.channel().attr(stat).getAndRemove();
                 handler = new StatusUriHandler(wrapper);
-            } else handler = new NotFoundUriHandler();
+            } else handler = notFoundUriHandler;
 
             //send response
-            FullHttpResponse response = handler.process(request, buf);
+            FullHttpResponse response = handler.process(request);
             //close the connection immediately because no more requests can be sent from the browser
-            response.headers().set(CONTENT_TYPE, UriHandler.CONTENT_TYPE);
+            response.headers().set(CONTENT_TYPE, "text/html; charset=UTF-8");
             ctx.write(response).addListener(ChannelFutureListener.CLOSE);
 
             // do some statistics
