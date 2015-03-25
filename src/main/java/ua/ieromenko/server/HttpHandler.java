@@ -9,8 +9,8 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.util.AttributeKey;
 import ua.ieromenko.uriHandlers.*;
-import ua.ieromenko.wrappers.ConnectionLogUnit;
-import ua.ieromenko.wrappers.WrapperOfEverything;
+import ua.ieromenko.util.ConnectionLogUnit;
+import ua.ieromenko.util.StatisticKeeper;
 
 import java.net.InetSocketAddress;
 import java.util.Date;
@@ -24,11 +24,10 @@ import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
  * <p/>
  */
 class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
-    private static final HelloUriHandler helloUriHandler = new HelloUriHandler();
     private static final NotFoundUriHandler notFoundUriHandler = new NotFoundUriHandler();
 
     private static final AttributeKey<ConnectionLogUnit> unit = AttributeKey.valueOf("unit");
-    private static final AttributeKey<WrapperOfEverything> stat = AttributeKey.valueOf("stat");
+    private static final AttributeKey<StatisticKeeper> stat = AttributeKey.valueOf("stat");
 
     private FullHttpRequest request;
     private ConnectionLogUnit logUnit = null;
@@ -53,11 +52,11 @@ class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
             //let`s handle this request
             UriHandler handler;
-            if (URI.equals("/hello")) handler = helloUriHandler;
+            if (URI.equals("/hello")) handler = new HelloUriHandler();
             else if (URI.matches("/redirect\\?url=\\S*")) handler = new RedirectUriHandler();
             else if (URI.equals("/status")) {
                 //read statistics that StatisticsHandler has already prepared
-                WrapperOfEverything wrapper = ctx.channel().attr(stat).getAndRemove();
+                StatisticKeeper wrapper = ctx.channel().attr(stat).getAndRemove();
                 handler = new StatusUriHandler(wrapper);
             } else handler = notFoundUriHandler;
 

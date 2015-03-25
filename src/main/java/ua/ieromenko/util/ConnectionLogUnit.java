@@ -1,4 +1,4 @@
-package ua.ieromenko.wrappers;
+package ua.ieromenko.util;
 
 import java.util.Date;
 

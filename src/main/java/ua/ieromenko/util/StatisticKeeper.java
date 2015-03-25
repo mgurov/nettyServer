@@ -1,16 +1,13 @@
-package ua.ieromenko.wrappers;
-
-import ua.ieromenko.util.LoggingQueue;
+package ua.ieromenko.util;
 
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author Alexandr Ieromenko on 05.03.15.
  *
  * Container for all statistics available at the moment
  */
-public class WrapperOfEverything {
+public class StatisticKeeper {
 
     private int connectionsCounter;
     private int activeConnectionsCounter;
@@ -20,11 +17,11 @@ public class WrapperOfEverything {
 
     private final LoggingQueue<ConnectionLogUnit> log; //IP, URI, timestamp, sentB, receivedB, speedB/s //
 
-    public WrapperOfEverything(ConcurrentHashMap<String, Integer> redirectionPerURL,
-                               LoggingQueue<ConnectionLogUnit> log,
-                               ConcurrentHashMap<String, RequestsCounter> requestsCounter,
-                               int activeConnectionsCounter,
-                               int connectionsCounter) {
+    public StatisticKeeper(ConcurrentHashMap<String, Integer> redirectionPerURL,
+                           LoggingQueue<ConnectionLogUnit> log,
+                           ConcurrentHashMap<String, RequestsCounter> requestsCounter,
+                           int activeConnectionsCounter,
+                           int connectionsCounter) {
         this.redirectionPerURL = redirectionPerURL;
         this.log = log;
         this.requestsCounter = requestsCounter;

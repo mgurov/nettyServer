@@ -6,9 +6,9 @@ import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.traffic.ChannelTrafficShapingHandler;
 import io.netty.util.AttributeKey;
 import ua.ieromenko.util.LoggingQueue;
-import ua.ieromenko.wrappers.ConnectionLogUnit;
-import ua.ieromenko.wrappers.RequestsCounter;
-import ua.ieromenko.wrappers.WrapperOfEverything;
+import ua.ieromenko.util.ConnectionLogUnit;
+import ua.ieromenko.util.RequestsCounter;
+import ua.ieromenko.util.StatisticKeeper;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,7 +33,7 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
     private final LoggingQueue<ConnectionLogUnit> log = new LoggingQueue<>();
 
     private final AttributeKey<ConnectionLogUnit> unit = AttributeKey.valueOf("unit");
-    private final AttributeKey<WrapperOfEverything> stat = AttributeKey.valueOf("stat");
+    private final AttributeKey<StatisticKeeper> stat = AttributeKey.valueOf("stat");
 
     public StatisticsHandler(long checkInterval) {
         super(checkInterval);
@@ -50,7 +50,7 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
 
             // SEND STATISTICS TO HttpHandler
             if (URI.equals("/status")) {
-                WrapperOfEverything c = new WrapperOfEverything(redirectionPerURL,
+                StatisticKeeper c = new StatisticKeeper(redirectionPerURL,
                         log, requestsCounter, activeConnectionsCounter.get(), totalConnectionsCounter.get());
                 ctx.channel().attr(stat).set(c);
             }
