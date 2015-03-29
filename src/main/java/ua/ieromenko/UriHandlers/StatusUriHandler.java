@@ -20,6 +20,7 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 public class StatusUriHandler implements UriHandler {
     private final StatisticKeeper stat;
+    //TODO: what's the point of having buff class member? Make it simple local variable @ process.
     private final StringBuilder buff = new StringBuilder();
 
     public StatusUriHandler(StatisticKeeper stat) {
@@ -29,6 +30,9 @@ public class StatusUriHandler implements UriHandler {
     @Override
     public FullHttpResponse process(HttpRequest request) {
 
+        //TODO: generally speaking, composing HTML this way is horrible. In real life you would probably want to have some kind
+        //TODO: of a .html template file with placeholders substituted with actual values, but I can understand that's bit
+        //TODO: out of the scope of this exercise.
         buff.append("<!DOCTYPE html>");
         buff.append("<html>");
         buff.append("<head>");

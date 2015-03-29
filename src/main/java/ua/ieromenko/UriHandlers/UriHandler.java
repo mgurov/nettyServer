@@ -6,6 +6,7 @@ package ua.ieromenko.UriHandlers;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpRequest;
 
+//TODO: there's nothing really special to URI in this interface. It could be well called HttpHandler, and what is now
 public interface UriHandler{
     /**
      * Create a response

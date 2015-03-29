@@ -31,6 +31,7 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
     private final ConcurrentHashMap<String, Integer> redirectionPerURL = new ConcurrentHashMap<>();
 
     private final LoggingQueue<ConnectionLogUnit> log = new LoggingQueue<>();
+    //TODO: Same keys are defined both here and HttpHandler. They should be defined one place. Ideally also used one place.
     private final AttributeKey<ConnectionLogUnit> unit = AttributeKey.valueOf("unit");
     private final AttributeKey<StatisticKeeper> stat = AttributeKey.valueOf("stat");
 
@@ -48,7 +49,11 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
             String URI = request.getUri();
 
             // SEND STATISTICS TO HttpHandler
+            //TODO: DRY violation. Here you duplicate the knowledge about the /status path with the routing @ HttpHandler.
             if (URI.equals("/status")) {
+                //TODO: this StatisticsKeeper is a copy (partially snapshop, partially live) of the state of the StatisticsHandler.
+                //TODO: doesn't make much sense to me. I would prefer either to have a global (injected via ServerInitializer?)
+                //TODO: shared object, or just to pass this (StatisticsHandler) to the StatusUriHandler.
                 StatisticKeeper c = new StatisticKeeper(redirectionPerURL,
                         log, requestsCounter, activeConnectionsCounter.get(), totalConnectionsCounter.get());
                 ctx.channel().attr(stat).set(c);
@@ -69,6 +74,7 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
             }
 
             //REDIRECTION COUNT
+            //TODO: DRY violation re. the redirection pattern. It would probably be more convenient to keep the counter at the Redirect Handler?
             if (URI.matches("/redirect\\?url=\\S*")) {
                 String url = URI.substring(URI.indexOf("=") + 1, URI.length());
                 synchronized (redirectionPerURL) {
