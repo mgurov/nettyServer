@@ -9,12 +9,11 @@ import io.netty.handler.codec.http.HttpRequest;
 public interface UriHandler{
     /**
      * Create a response
+     *
      * @param request
-     * @param buff
      * @return
      */
-    FullHttpResponse process(HttpRequest request, StringBuilder buff);
+    FullHttpResponse process(HttpRequest request);
 
-    String CONTENT_TYPE = "text/html; charset=UTF-8";
 
 }

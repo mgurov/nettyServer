@@ -9,9 +9,9 @@ import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.util.CharsetUtil;
-import ua.ieromenko.wrappers.ConnectionLogUnit;
-import ua.ieromenko.wrappers.RequestsCounter;
-import ua.ieromenko.wrappers.WrapperOfEverything;
+import ua.ieromenko.util.RequestsCounter;
+import ua.ieromenko.util.StatisticKeeper;
+import ua.ieromenko.util.ConnectionLogUnit;
 
 import java.util.Map;
 
@@ -19,14 +19,15 @@ import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 public class StatusUriHandler implements UriHandler {
-    private final WrapperOfEverything stat;
+    private final StatisticKeeper stat;
+    private final StringBuilder buff = new StringBuilder();
 
-    public StatusUriHandler(WrapperOfEverything stat) {
+    public StatusUriHandler(StatisticKeeper stat) {
         this.stat = stat;
     }
 
     @Override
-    public FullHttpResponse process(HttpRequest request, StringBuilder buff) {
+    public FullHttpResponse process(HttpRequest request) {
 
         buff.append("<!DOCTYPE html>");
         buff.append("<html>");

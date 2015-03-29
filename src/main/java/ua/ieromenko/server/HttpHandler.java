@@ -8,7 +8,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.util.AttributeKey;
-import ua.ieromenko.uriHandlers.*;
+import ua.ieromenko.UriHandlers.*;
 import ua.ieromenko.util.ConnectionLogUnit;
 import ua.ieromenko.util.StatisticKeeper;
 

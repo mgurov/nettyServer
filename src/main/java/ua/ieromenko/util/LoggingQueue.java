@@ -1,24 +1,31 @@
 package ua.ieromenko.util;
 
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Consumer;
 
 /**
  * @Author Alexandr Ieromenko on 04.03.15.
  * <p/>
  * ConcurrentLinkedQueue implementation that holds only 16 values
  */
-public class LoggingQueue<E> extends ConcurrentLinkedQueue<E> {
-    @Override
+public final class LoggingQueue<E> implements Iterable<E> {
+    private final ConcurrentLinkedQueue<E> queue = new ConcurrentLinkedQueue<>();
+
+    public Iterator<E> iterator() {
+        return queue.iterator();
+    }
+
     public boolean add(E e) {
-        if (size() > 15) clean();
-        return super.add(e);
+        if (queue.size() > 15) clean();
+        return queue.add(e);
     }
 
     private void clean() {
         do {
-            super.remove();
+            queue.remove();
         }
-        while (size() > 15);
+        while (queue.size() > 15);
 
     }
 }

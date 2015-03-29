@@ -5,8 +5,8 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.traffic.ChannelTrafficShapingHandler;
 import io.netty.util.AttributeKey;
-import ua.ieromenko.util.LoggingQueue;
 import ua.ieromenko.util.ConnectionLogUnit;
+import ua.ieromenko.util.LoggingQueue;
 import ua.ieromenko.util.RequestsCounter;
 import ua.ieromenko.util.StatisticKeeper;
 
@@ -31,7 +31,6 @@ public class StatisticsHandler extends ChannelTrafficShapingHandler {
     private final ConcurrentHashMap<String, Integer> redirectionPerURL = new ConcurrentHashMap<>();
 
     private final LoggingQueue<ConnectionLogUnit> log = new LoggingQueue<>();
-
     private final AttributeKey<ConnectionLogUnit> unit = AttributeKey.valueOf("unit");
     private final AttributeKey<StatisticKeeper> stat = AttributeKey.valueOf("stat");
 

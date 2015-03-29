@@ -16,19 +16,12 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 public class HelloUriHandler implements UriHandler {
     private static final int TIMEOUT = 10000;
+    private static final String ANSWER_HELLO_WORLD = "<!DOCTYPE html><html><body><h1>Hello World!!!</h1></body></html>";
 
     @Override
-    public FullHttpResponse process(HttpRequest request, StringBuilder buff) {
-
-        buff.append("<!DOCTYPE html>");
-        buff.append("<html><body><h1>");
-        buff.append("Hello World!!!");
-        buff.append("</h1></body></html>");
-
+    public FullHttpResponse process(HttpRequest request) {
         FullHttpResponse response = new DefaultFullHttpResponse(
-                HTTP_1_1,
-                OK,
-                Unpooled.copiedBuffer(buff.toString(), CharsetUtil.UTF_8)
+                HTTP_1_1, OK, Unpooled.copiedBuffer(ANSWER_HELLO_WORLD, CharsetUtil.UTF_8)
         );
         try {
             Thread.sleep(TIMEOUT);
